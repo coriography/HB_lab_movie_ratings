@@ -29,6 +29,14 @@ def get_movies():
     return Movie.query.all()
 
 
+def get_movie_by_id(movie_id):
+    """returns movie details"""
+
+    movie = Movie.query.get(movie_id)
+
+    return movie
+
+
 def create_rating(user, movie, score):
     """create and return a new rating."""
 
@@ -40,7 +48,22 @@ def create_rating(user, movie, score):
     return rating
 
 
+def get_users():
+    """returns all users"""
+    users = User.query.all()
 
+    return users
+
+def get_user_by_id(user_id):
+    """gets user by id"""
+
+    user = User.query.get(user_id)
+
+    return user
+
+def get_user_by_email(email):
+
+    return User.query.filter(User.email == email).first()
 
 
 if __name__ == '__main__':

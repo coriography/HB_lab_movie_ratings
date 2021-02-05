@@ -25,6 +25,48 @@ def all_movies():
 
     return render_template('all_movies.html', movies=movies)
 
+@app.route('/movies/<movie_id>')
+def show_movie(movie_id):
+    """View movie details."""
+
+    movie = crud.get_movie_by_id(movie_id)
+
+    return render_template('movie_details.html', movie=movie)
+
+@app.route('/users')
+def all_user():
+    """view all users"""
+    users = crud.get_users()
+
+    return render_template('all_users.html', users=users)
+
+
+@app.route('/users', methods=['POST'])
+def register_user():
+
+    form_email = request.form.get('email')
+    form_password = request.form.get('password')
+    user = crud.get_user_by_email(form_email)
+
+    if user == None:
+        crud.create_user(form_email, form_password)
+        flash(f"user {form_email} has been created!")
+    
+    else: 
+        flash(f"user {form_email} already exists")
+
+    return redirect('/')
+
+
+@app.route('/users/<user_id>')
+def show_user(user_id):
+    """view user details"""
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template('user_details.html', user=user)
+
+
 
 if __name__ == '__main__':
     connect_to_db(app)

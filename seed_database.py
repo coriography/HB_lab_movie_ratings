@@ -13,6 +13,8 @@ os.system('createdb ratings')
 model.connect_to_db(server.app)
 model.db.create_all()
 
+print(f"I'm in {__name__}")
+
 with open('data/movies.json') as f:
     movie_data = json.loads(f.read())
 

@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+print(f"this is modell {__name__}")
+
 class User(db.Model):
     """a user."""
 

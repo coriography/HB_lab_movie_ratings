@@ -17,6 +17,24 @@ app.jinja_env.undefined = StrictUndefined
 def homepage():
     return render_template('homepage.html')
 
+@app.route('/', methods=['POST'])
+def log_in():
+    """submits a log in form"""
+    
+    form_email = request.form.get('login_email')
+    form_password = request.form.get('login_password')
+
+    user = crud.get_user_by_email(form_email)
+
+    if user.password == form_password:
+        session['user_id'] = user.user_id
+        flash(f'logged in user {form_email}')
+        
+    else:
+        flash(f'incorrect password :sad face:')
+
+    return redirect('/')
+
 @app.route('/movies')
 def all_movies():
     """View all movies."""
@@ -65,7 +83,6 @@ def show_user(user_id):
     user = crud.get_user_by_id(user_id)
 
     return render_template('user_details.html', user=user)
-
 
 
 if __name__ == '__main__':
